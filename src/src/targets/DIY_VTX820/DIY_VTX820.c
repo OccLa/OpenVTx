@@ -16,13 +16,13 @@
  *    Index 0 is ignored [https://github.com/iNavFlight/inav/blob/a8016edd0d6f05bb12a75b0ea75a3483772baaeb/src/main/io/vtx_smartaudio.c#L334]
  *
  */
-uint8_t saPowerLevelsLut[SA_NUM_POWER_LEVELS] = {20, 23, 26, 28, 29};
+uint8_t saPowerLevelsLut[SA_NUM_POWER_LEVELS] = {20, 26, 29, 31, 32};
 
 uint8_t saPowerLevelsLabel[SA_NUM_POWER_LEVELS * POWER_LEVEL_LABEL_LENGTH] = {'1', '0', '0',
-                                                                              '2', '0', '0',
                                                                               '4', '0', '0',
-                                                                              '6', '0', '0',
-                                                                              '8', '0', '0'};
+                                                                              '8', '0', '0',
+                                                                              '1', 'W', '2',
+                                                                              '1', 'W', '6'};
 
 gpio_pwm_t outputPowerTimer;
 gpio_out_t vref_pin;
@@ -35,17 +35,19 @@ uint8_t amp_state = 0;
 
 // #if defined(DIY_VTX820)
   #define CAL_FREQ_SIZE 9
-  #define CAL_DBM_SIZE 6
+  #define CAL_DBM_SIZE 7
+  #define MAX_POWER_IN_DBM 32
   uint16_t calFreqs[CAL_FREQ_SIZE] = {5600,	5650, 5700, 5750, 5800,	5850, 5900, 5950, 6000};
-  uint8_t calDBm[CAL_DBM_SIZE] = {20, 23, 26, 27, 28, 29}; // 100mW 200mW 400mW 500mW 600mW 800mW
+  uint8_t calDBm[CAL_DBM_SIZE] = {20, 23, 26, 28, 29, 31, 32}; // 100mW 200mW 400mW 600mW 800mW 1200mW 1600mW
   uint16_t calVpd[CAL_DBM_SIZE][CAL_FREQ_SIZE] = {
   // 5600, 5650, 5700, 5750, 5800, 5850, 5900, 5950, 6000
-  {473, 463, 451, 451, 442, 449, 462, 462, 476}, // 100mW
-  {586, 578, 549, 547, 545, 560, 562, 583, 595}, // 200mW
-  {779, 770, 721, 716, 717, 733, 771, 750, 788}, // 400mW
-  {894, 881, 816, 816, 811, 822, 841, 874, 892}, // 500mW
-  {1096, 1075, 964, 958, 949, 964, 1013, 1038, 1076}, // 600mW
-  {1500, 1500, 1185, 1190, 1170, 1310, 1400, 1450, 1500} // 800mW
+  {452, 454, 424, 430, 424, 432, 449, 457, 460}, // 100mW
+  {530, 521, 518, 518, 524, 525, 536, 548, 562}, // 200mW
+  {672, 651, 667, 664, 678, 678, 688, 707, 733}, // 400mW
+  {821, 793, 807, 805, 820, 824, 840, 865, 899}, // 600mW
+  {917, 887, 893, 893, 905, 914, 934, 964, 1002}, // 800mW
+  {1161, 1130, 1098, 1107, 1107, 1133, 1170, 1210, 1256}, // 1200mW
+  {1314, 1286, 1221, 1237, 1225, 1264, 1314, 1361, 1409} // 1600mW
   };  
 // #endif
 
@@ -164,12 +166,12 @@ void target_set_power_dB(float dB)
     VpdSetPoint = 0;
     pwm_val = 2500;
     amp_state = 0;
-  } else if (dB > 29)
+  } else if (dB > MAX_POWER_IN_DBM)
   {
     VpdSetPoint = 1500;
     pwm_val = 2000;
     amp_state = 1;
-  } else if (dB == 29)
+  } else if (dB == MAX_POWER_IN_DBM)
   {
     VpdSetPoint = setMaxPower();
     amp_state = 1;
@@ -224,10 +226,10 @@ void target_loop(void)
   int len;
   uint32_t now = millis();
   currentVpd = vpd_value_get();
-  if (200 <= (now - temp)) {
+  if (2000 <= (now - temp)) {
     temp = now;
 
-    len = snprintf(buff, sizeof(buff), "%lu,%lu,%lu,%lu\n", myEEPROM.currFreq, pwm_val, VpdSetPoint, currentVpd);
+    len = snprintf(buff, sizeof(buff), "%lu,%lu,%lu,%lu\r\n", myEEPROM.currFreq, pwm_val, VpdSetPoint, currentVpd);
     Serial_write_len((uint8_t*)buff, len);
 
     #if OUTPUT_POWER_TESTING

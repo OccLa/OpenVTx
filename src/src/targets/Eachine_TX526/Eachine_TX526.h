@@ -30,6 +30,12 @@ If you have made it this far and have the equipment to check these outputs, plea
 #define SA_NUM_POWER_LEVELS 4 // Max 5 for INAV.
 extern uint8_t saPowerLevelsLut[SA_NUM_POWER_LEVELS];
 
+#define INDICATOR_POWERDB_LEVEL1    0
+#define INDICATOR_POWERDB_LEVEL2    1
+#define INDICATOR_POWERDB_LEVEL3    14
+#define INDICATOR_POWERDB_LEVEL4    20
+#define INDICATOR_POWERDB_LEVEL5    23
+
 #define UART_TX 0
 #define UART_RX 0
 //#define SERIAL_PIN -1

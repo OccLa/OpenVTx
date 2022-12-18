@@ -8,6 +8,13 @@
 extern uint8_t saPowerLevelsLut[SA_NUM_POWER_LEVELS];
 extern uint8_t saPowerLevelsLabel[SA_NUM_POWER_LEVELS * POWER_LEVEL_LABEL_LENGTH];
 
+#define INDICATOR_POWERDB_LEVEL1    1
+#define INDICATOR_POWERDB_LEVEL2    2
+#define INDICATOR_POWERDB_LEVEL3    14
+#define INDICATOR_POWERDB_LEVEL4    20
+#define INDICATOR_POWERDB_LEVEL5    26
+
+
 #define UART_RX       PA9
 #define UART_TX       PA9
 
