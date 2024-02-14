@@ -69,3 +69,4 @@ OpenVTx uses VS Code and [PlatformIO](https://platformio.org/platformio-ide).
 # Contributors
 
 Big thanks to cruwaller for adding the GD32 MCU found on the EWRF E7082VM, [and everyone else!](https://github.com/OpenVTx/OpenVTx/graphs/contributors)
+
