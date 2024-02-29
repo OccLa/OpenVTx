@@ -32,6 +32,7 @@ extern uint8_t saPowerLevelsLut[SA_NUM_POWER_LEVELS];
 
 #define UART_TX 0
 #define UART_RX 0
+#define BUTTON 0
 //#define SERIAL_PIN -1
 
 #define SPI_SS PC6
