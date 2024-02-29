@@ -85,23 +85,23 @@ uint8_t getBlinksToMake(mode_indicator_state_t *s)
             // 1 2 14 20 26
             // it's ugly but i don't want to spend MCU resources
             // on creating dectionary/hash map
-            if (s->currPowerdB == 1)
+            if (s->currPowerdB == INDICATOR_POWERDB_LEVEL1)
             {
                 blinksToDo = 1;
             }
-            else if (s->currPowerdB == 2)
+            else if (s->currPowerdB == INDICATOR_POWERDB_LEVEL2)
             {
                 blinksToDo = 2;
             }
-            else if (s->currPowerdB == 14)
+            else if (s->currPowerdB == INDICATOR_POWERDB_LEVEL3)
             {
                 blinksToDo = 3;
             }
-            else if (s->currPowerdB == 20)
+            else if (s->currPowerdB == INDICATOR_POWERDB_LEVEL4)
             {
                 blinksToDo = 4;
             }
-            else if (s->currPowerdB == 26)
+            else if (s->currPowerdB == INDICATOR_POWERDB_LEVEL5)
             {
                 blinksToDo = 5;
             }

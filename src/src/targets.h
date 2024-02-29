@@ -16,6 +16,8 @@
 #include "targets/Eachine_TX801/Eachine_TX801.h"
 #elif defined(EACHINE_TX526)
 #include "targets/Eachine_TX526/Eachine_TX526.h"
+#elif defined(DIY_VTX820)
+#include "targets/DIY_VTX820/DIY_VTX820.h"
 #endif
 
 // These are target specific functions and need to implemented per target!

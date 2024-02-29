@@ -1,19 +1,18 @@
 #ifndef __TARGET_DEF_H_
 #define __TARGET_DEF_H_
 
-#define MAX_POWER                   400 // mW
+#define MAX_POWER                   1600 // mW
 
 #define SA_NUM_POWER_LEVELS         5 // Max 5 for INAV.
 #define POWER_LEVEL_LABEL_LENGTH    3
 extern uint8_t saPowerLevelsLut[SA_NUM_POWER_LEVELS];
 extern uint8_t saPowerLevelsLabel[SA_NUM_POWER_LEVELS * POWER_LEVEL_LABEL_LENGTH];
 
-#define INDICATOR_POWERDB_LEVEL1    1
-#define INDICATOR_POWERDB_LEVEL2    2
-#define INDICATOR_POWERDB_LEVEL3    14
-#define INDICATOR_POWERDB_LEVEL4    20
-#define INDICATOR_POWERDB_LEVEL5    26
-
+#define INDICATOR_POWERDB_LEVEL1    20
+#define INDICATOR_POWERDB_LEVEL2    26
+#define INDICATOR_POWERDB_LEVEL3    29
+#define INDICATOR_POWERDB_LEVEL4    31
+#define INDICATOR_POWERDB_LEVEL5    32
 
 #define UART_RX       PA9
 #define UART_TX       PA9
